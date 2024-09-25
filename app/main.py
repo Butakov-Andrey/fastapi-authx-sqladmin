@@ -1,12 +1,15 @@
 import sys
 
 from accounts.router import router as accounts_router
+from admin import AccountsAdmin, ProfilesAdmin
 from config import settings
 from dependencies import logging
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
+from postgres import engine
+from sqladmin import Admin
 
 app = FastAPI(
     title="lms",
@@ -19,6 +22,8 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+admin = Admin(app, engine)
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -43,3 +48,6 @@ app.add_middleware(
 
 # routers
 app.include_router(accounts_router, dependencies=[Depends(logging)])
+# admin
+admin.add_view(AccountsAdmin)
+admin.add_view(ProfilesAdmin)
