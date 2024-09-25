@@ -1,0 +1,24 @@
+[project]
+name = "lms_alpha"
+version = "0.1.0"
+description = "lms"
+readme = "README.MD"
+dependencies = [
+    'ruff',
+    'pre-commit',
+
+    'environs', 
+    'pytz',
+
+    'fastapi',
+    'uvicorn',
+    'pydantic',
+    'pydantic-settings',
+    'python-multipart',
+
+    'psycopg2-binary',
+    'SQLAlchemy',
+    'alembic',
+
+    'loguru',
+]

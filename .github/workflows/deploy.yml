@@ -1,0 +1,36 @@
+name: Deploy to timeweb
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: executing remote ssh commands using ssh
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+            # Go to project directory
+            cd projects/widgets/
+
+            # Update local project from remote repository
+            git pull origin master
+
+            # Build app
+            bash build/all.sh
+
+            # Activate migrations
+            bash build/migrations_activate.sh
+
+            # Build app
+            bash build/all.sh
+
+            # Restart NGINX
+            docker restart nginx

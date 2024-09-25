@@ -1,0 +1,38 @@
+services:
+  lms:
+    container_name: lms
+    image: lms_image
+    build:
+      context: .
+      dockerfile: docker/lms.Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8020 --reload --log-level error
+    volumes:
+      - ./app/:/code
+    ports:
+      - 8020:8020
+    env_file:
+      - ${ENV_FILE}
+    networks:
+      - local_lms_network
+
+  lms_pg:
+    container_name: lms_pg
+    image: lms_pg_image
+    build:
+      context: .
+      dockerfile: docker/lms_pg.Dockerfile
+    volumes:
+      - lms_pg_data:/var/lib/postgresql/data/
+    ports:
+      - 5460:5460
+    env_file:
+      - ${ENV_FILE}
+    networks:
+      - local_lms_network
+
+volumes:
+  lms_pg_data:
+
+networks:
+  local_lms_network:
+    driver: bridge
