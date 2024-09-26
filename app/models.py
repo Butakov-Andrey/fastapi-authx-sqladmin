@@ -69,15 +69,15 @@ class Profile(Base):
 class BlockedRefreshToken(Base):
     __tablename__ = "blocked_refresh_tokens"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    email: Mapped[str] = mapped_column(String(100), unique=True)
-    refresh_token: Mapped[str] = mapped_column(String(200), unique=True)
+    email: Mapped[Optional[str]] = mapped_column(String(100), unique=True)
+    refresh_token: Mapped[Optional[str]] = mapped_column(String(500), unique=True)
 
     @classmethod
-    def get_by_email(cls, session, email: str) -> bool:
+    def get_by_email(cls, session, email: str):
         return session.query(cls).filter_by(email=email).first()
 
     @classmethod
-    def get_by_refresh_token(cls, session, refresh_token: str) -> bool:
+    def get_by_refresh_token(cls, session, refresh_token: str):
         return session.query(cls).filter_by(refresh_token=refresh_token).first()
 
     def __repr__(self) -> str:

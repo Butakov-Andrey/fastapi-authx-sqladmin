@@ -45,11 +45,18 @@ async def login(
 def refresh(
     request: Request,
     refresh_payload: TokenPayload = Depends(security.refresh_token_required),
+    session: Session = Depends(get_session),
 ):
     refresh_token = request.cookies.get("refresh_token_cookie")
+    block_by_email = BlockedRefreshToken.get_by_email(
+        session=session,
+        email=refresh_payload.sub,
+    )
+    block_by_refresh_token = BlockedRefreshToken.get_by_refresh_token(
+        session=session,
+        refresh_token=refresh_token,
+    )
 
-    block_by_email = BlockedRefreshToken.get_by_email(refresh_payload.sub)
-    block_by_refresh_token = BlockedRefreshToken.get_by_refresh_token(refresh_token)
     if block_by_email or block_by_refresh_token:
         raise HTTPException(401, detail={"message": "You are blocked"})
 
