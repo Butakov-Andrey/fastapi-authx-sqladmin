@@ -13,6 +13,7 @@ auth_config.JWT_SECRET_KEY = settings.SECRET_KEY
 auth_config.JWT_TOKEN_LOCATION = ["cookies"]
 auth_config.JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)
 auth_config.JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
+auth_config.JWT_COOKIE_CSRF_PROTECT = False
 security = AuthX(config=auth_config)
 
 

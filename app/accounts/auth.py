@@ -3,7 +3,7 @@ from dependencies import get_session, security
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from loguru import logger
-from models import Account
+from models import Account, BlockedRefreshToken
 from passlib.hash import bcrypt
 from sqlalchemy.orm import Session
 
@@ -42,10 +42,19 @@ async def login(
 
 
 @router.post("/refresh")
-def refresh(refresh_payload: TokenPayload = Depends(security.refresh_token_required)):
-    # TODO: проверять, есть ли в базе refresh token или email
+def refresh(
+    request: Request,
+    refresh_payload: TokenPayload = Depends(security.refresh_token_required),
+):
+    refresh_token = request.cookies.get("refresh_token_cookie")
 
-    logger.debug("REFRESH")
+    block_by_email = BlockedRefreshToken.get_by_email(refresh_payload.sub)
+    block_by_refresh_token = BlockedRefreshToken.get_by_refresh_token(refresh_token)
+    if block_by_email or block_by_refresh_token:
+        raise HTTPException(401, detail={"message": "You are blocked"})
 
-    access_token = security.create_access_token(refresh_payload.sub)
+    access_token = security.create_access_token(
+        uid=refresh_payload.sub,
+        data={"role": getattr(refresh_payload, "role", None)},
+    )
     return {"access_token": access_token}

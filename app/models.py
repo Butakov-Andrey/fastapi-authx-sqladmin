@@ -72,5 +72,13 @@ class BlockedRefreshToken(Base):
     email: Mapped[str] = mapped_column(String(100), unique=True)
     refresh_token: Mapped[str] = mapped_column(String(200), unique=True)
 
+    @classmethod
+    def get_by_email(cls, session, email: str) -> bool:
+        return session.query(cls).filter_by(email=email).first()
+
+    @classmethod
+    def get_by_refresh_token(cls, session, refresh_token: str) -> bool:
+        return session.query(cls).filter_by(refresh_token=refresh_token).first()
+
     def __repr__(self) -> str:
         return self.email

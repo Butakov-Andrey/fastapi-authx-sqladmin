@@ -1,7 +1,7 @@
 # LMS ALPHA
 
 ## TODO
-- https://github.com/yezz123/AuthX
+- регистрация пользователя
 - https://aminalaee.dev/sqladmin/authentication/
 
 ## Начало работы
