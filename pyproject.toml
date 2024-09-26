@@ -16,6 +16,7 @@ dependencies = [
     'pydantic',
     'pydantic-settings',
     'python-multipart',
+    'email-validator',
 
     'psycopg2-binary',
     'SQLAlchemy',
@@ -23,4 +24,7 @@ dependencies = [
     'sqladmin',
 
     'loguru',
+
+    'authx',
+    'itsdangerous',
 ]

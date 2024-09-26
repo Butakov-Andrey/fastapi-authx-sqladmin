@@ -2,7 +2,6 @@ import datetime
 from enum import Enum
 from typing import Optional
 
-from config import settings
 from sqlalchemy import TIMESTAMP
 from sqlalchemy import Enum as SQLAlchemyEnum
 from sqlalchemy import ForeignKey, String, Text
@@ -61,3 +60,13 @@ class Profile(Base):
 
     def __repr__(self) -> str:
         return self.last_name
+
+
+class BlockedRefreshToken(Base):
+    __tablename__ = "blocked_refresh_tokens"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    email: Mapped[str] = mapped_column(String(100), unique=True)
+    refresh_token: Mapped[str] = mapped_column(String(200), unique=True)
+
+    def __repr__(self) -> str:
+        return self.email

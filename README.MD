@@ -2,7 +2,7 @@
 
 ## TODO
 - https://github.com/yezz123/AuthX
-- https://github.com/aminalaee/sqladmin
+- https://aminalaee.dev/sqladmin/authentication/
 
 ## Начало работы
 Для локальной установки зависимостей, запустите следующие команды:

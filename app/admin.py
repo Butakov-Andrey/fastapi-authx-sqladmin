@@ -1,7 +1,7 @@
 import datetime
 
 from config import settings
-from models import Account, Profile
+from models import Account, BlockedRefreshToken, Profile
 from passlib.hash import bcrypt
 from pytz import UTC
 from sqladmin import ModelView
@@ -44,6 +44,7 @@ class AccountsAdmin(ModelView, model=Account):
         Account.created_at,
         Account.updated_at,
         Account.last_login,
+        Account.profile,
     ]
 
     async def on_model_change(self, data, model, is_created, request) -> None:
@@ -64,4 +65,19 @@ class ProfilesAdmin(ModelView, model=Profile):
     # отображение объекта
     column_details_exclude_list = [
         Profile.account_id,
+    ]
+
+
+class BlockedRefreshTokensAdmin(ModelView, model=BlockedRefreshToken):
+    name = "Blocked Refresh Token"
+    name_plural = "Blocked Refresh Tokens"
+    icon = "fa-solid fa-skull-crossbones"
+    category = "Users"
+    # отображение списка
+    column_list = [BlockedRefreshToken.email]
+    column_searchable_list = [BlockedRefreshToken.email]
+    column_default_sort = [(BlockedRefreshToken.id, True)]
+    # отображение объекта
+    column_details_exclude_list = [
+        BlockedRefreshToken.id,
     ]

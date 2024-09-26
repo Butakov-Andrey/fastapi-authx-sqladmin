@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     # timezone
     moscow_timezone: tzinfo = pytz.timezone("Europe/Moscow")
 
+    # authx
+    SECRET_KEY: str
+
     # logging
     LOGURU_FORMAT: str = "{level}: <level>{message}</level>"
 

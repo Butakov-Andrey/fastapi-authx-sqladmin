@@ -1,7 +1,9 @@
 import sys
 
-from accounts.router import router as accounts_router
-from admin import AccountsAdmin, ProfilesAdmin
+from accounts.auth import router as auth_router
+from accounts.home import router as home_router
+from admin import AccountsAdmin, BlockedRefreshTokensAdmin, ProfilesAdmin
+from authx import AuthX
 from config import settings
 from dependencies import logging
 from fastapi import Depends, FastAPI
@@ -11,9 +13,9 @@ from loguru import logger
 from postgres import engine
 from sqladmin import Admin
 
+# main
 app = FastAPI(
     title="lms",
-    version="0.0.1",
     contact={
         "name": "Andrey Butakov",
         "email": "6669.butakov@gmail.com",
@@ -22,11 +24,15 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+# admin
 admin = Admin(app, engine)
 
+# authx handle errors
+AuthX().handle_errors(app)
 
+# static
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 
 # logger
 logger.remove()
@@ -47,7 +53,9 @@ app.add_middleware(
 )
 
 # routers
-app.include_router(accounts_router, dependencies=[Depends(logging)])
+app.include_router(auth_router, dependencies=[Depends(logging)])
+app.include_router(home_router, dependencies=[Depends(logging)])
 # admin
 admin.add_view(AccountsAdmin)
 admin.add_view(ProfilesAdmin)
+admin.add_view(BlockedRefreshTokensAdmin)
