@@ -40,6 +40,10 @@ class Account(Base):
         "Profile", back_populates="account", uselist=False, cascade="all, delete-orphan"
     )
 
+    @classmethod
+    def get_by_email(cls, session, email: str):
+        return session.query(cls).filter_by(email=email).first()
+
     def __repr__(self) -> str:
         return self.email
 
