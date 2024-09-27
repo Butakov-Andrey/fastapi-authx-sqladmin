@@ -2,7 +2,7 @@ import sys
 
 from accounts.auth import router as auth_router
 from accounts.home import router as home_router
-from admin import AccountsAdmin, BlockedRefreshTokensAdmin, ProfilesAdmin
+from admin import AccountsAdmin, AdminAuth, BlockedRefreshTokensAdmin, ProfilesAdmin
 from authx import AuthX
 from config import settings
 from dependencies import logging
@@ -25,10 +25,11 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+# authx
 # admin
-admin = Admin(app, engine)
-
-# authx handle errors
+authentication_backend = AdminAuth(secret_key="...")
+admin = Admin(app, engine, authentication_backend=authentication_backend)
+# handle errors
 AuthX().handle_errors(app)
 
 # static
@@ -41,7 +42,6 @@ logger.add(
     colorize=True,
     format=settings.LOGURU_FORMAT,
 )
-
 
 # middleware
 app.add_middleware(

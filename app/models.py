@@ -44,6 +44,13 @@ class Account(Base):
     def get_by_email(cls, session, email: str):
         return session.query(cls).filter_by(email=email).first()
 
+    @classmethod
+    def get_admin_by_email(cls, session, email: str):
+        account = cls.get_by_email(session, email)
+        if account and account.role in (Role.ADMIN, Role.SUPERADMIN):
+            return account
+        return None
+
     def __repr__(self) -> str:
         return self.email
 

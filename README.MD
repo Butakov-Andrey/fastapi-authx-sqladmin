@@ -1,8 +1,8 @@
-# LMS ALPHA
+# LMS EWA
 
 ## TODO
 - регистрация пользователя
-- https://aminalaee.dev/sqladmin/authentication/
+- делать фон карточек разного цвета в зависимости от категории (https://aminalaee.dev/sqladmin/authentication/)
 
 ## Начало работы
 Для локальной установки зависимостей, запустите следующие команды:

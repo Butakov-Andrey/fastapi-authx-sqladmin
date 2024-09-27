@@ -26,6 +26,9 @@ class Settings(BaseSettings):
 
     # authx
     SECRET_KEY: str
+    SESSION_LIFETIME_MINUTES: int = 30
+    ADMIN_USERNAME: str
+    ADMIN_PASSWORD: str
 
     # logging
     LOGURU_FORMAT: str = "{level}: <level>{message}</level>"

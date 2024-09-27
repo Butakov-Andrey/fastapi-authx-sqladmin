@@ -2,7 +2,6 @@ from authx import TokenPayload
 from dependencies import get_session, security
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
-from loguru import logger
 from models import Account, BlockedRefreshToken
 from passlib.hash import bcrypt
 from sqlalchemy.orm import Session
@@ -48,6 +47,7 @@ def refresh(
     session: Session = Depends(get_session),
 ):
     refresh_token = request.cookies.get("refresh_token_cookie")
+
     block_by_email = BlockedRefreshToken.get_by_email(
         session=session,
         email=refresh_payload.sub,
