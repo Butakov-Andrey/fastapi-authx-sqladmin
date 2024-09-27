@@ -18,7 +18,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
             # Go to project directory
-            cd projects/widgets/
+            cd projects/lms_alpha/
 
             # Update local project from remote repository
             git pull origin master

@@ -24,7 +24,7 @@ services:
     volumes:
       - lms_pg_data:/var/lib/postgresql/data/
     ports:
-      - 5450:5450
+      - 5460:5460
     env_file:
       - ${ENV_FILE}
     networks:
