@@ -1,8 +1,12 @@
-# LMS EWA
+# FastAPI Template
 
-## TODO
-- регистрация пользователя
-- делать фон карточек разного цвета в зависимости от категории (https://aminalaee.dev/sqladmin/authentication/)
+# Описание
+Шаблон проекта на FastAPI в Docker.  
+БД - Postgres.  
+ORM и миграции - SQLAlchemy + Alembic.  
+Панель администратора (/admin) - SQLAdmin.  
+JWT - Authx. Защищенные эндпоинты, access и refresh токены, возможность блокировать пользователя по email/refresh_token
+Готовые модели: Account, Profile, BlockedRefreshToken.
 
 ## Начало работы
 Для локальной установки зависимостей, запустите следующие команды:
@@ -36,14 +40,4 @@ bash build/local.sh
 
 bash build/migrations_build.sh
 bash build/migrations_activate.sh
-```
-
-## Файлы
-Отправить .env на сервер:
-```
-scp /home/imblackmamba/projects/widgets/.env root@94.241.175.91:/root/projects/widgets
-```
-Отправить папку на сервер:
-```
-scp -r [источник] [получатель]
 ```
