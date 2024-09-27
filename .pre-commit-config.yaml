@@ -1,4 +1,4 @@
-files: ^(apps/)
+files: ^(app/)
 exclude: (?x).*/(alembic|vosk-model-small-ru-0.22)($|/.*)|
 repos:
 - repo: https://github.com/astral-sh/ruff-pre-commit
