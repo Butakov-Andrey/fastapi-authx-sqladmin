@@ -13,14 +13,6 @@ class Settings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: int
 
-    # OPENROUTER
-    OPENROUTER_API_KEY: str
-    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-
-    # telegram
-    SITE_CONTACTS_BOT: str
-    SITE_CONTACTS_GROUP_ID: str = "-1002078876219"
-
     # timezone
     moscow_timezone: tzinfo = pytz.timezone("Europe/Moscow")
 
