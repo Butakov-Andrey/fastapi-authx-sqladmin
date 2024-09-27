@@ -29,7 +29,7 @@ pre-commit install
 ```
 [Указание директории](.pre-commit-config.yaml) в которых должны/не должны сработать pre-commit hooks:  
 ```
-files: ^(apps/)
+files: ^(app/)
 exclude: (?x).*/(alembic|vosk-model-small-ru-0.22)($|/.*)|
 ```
 
