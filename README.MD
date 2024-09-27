@@ -5,7 +5,7 @@
 БД - Postgres.  
 ORM и миграции - SQLAlchemy + Alembic.  
 Панель администратора (/admin) - SQLAdmin.  
-JWT - Authx. Защищенные эндпоинты, access и refresh токены, возможность блокировать пользователя по email/refresh_token
+JWT - Authx. Защищенные эндпоинты, access и refresh токены, возможность блокировать пользователя по email/refresh_token.  
 Готовые модели: Account, Profile, BlockedRefreshToken.
 
 ## Начало работы
