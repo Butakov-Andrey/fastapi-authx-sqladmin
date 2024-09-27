@@ -1,7 +1,7 @@
 [project]
-name = "lms_alpha"
+name = "template"
 version = "0.1.0"
-description = "lms"
+description = "fastapi template"
 readme = "README.MD"
 dependencies = [
     'ruff',
