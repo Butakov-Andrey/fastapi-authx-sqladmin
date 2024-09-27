@@ -20,18 +20,20 @@ async def login(
     password: str,
     session: Session = Depends(get_session),
 ) -> JSONResponse:
-    account = Account.get_by_email(session, email)
+    account = Account.get_by_email(session=session, email=email)
     if not account or not bcrypt.verify(password, account.password_hash):
         raise HTTPException(401, detail={"message": "Bad credentials"})
 
+    block_by_email = BlockedRefreshToken.get_by_email(session=session, email=email)
+    if block_by_email:
+        raise HTTPException(401, detail={"message": "You are blocked"})
+
     # получаем роль и записываем в payload
     access_token = security.create_access_token(
-        uid=email,
-        data={"role": account.role.value},
+        uid=email, data={"role": account.role.value}
     )
     refresh_token = security.create_refresh_token(
-        uid=email,
-        data={"role": account.role.value},
+        uid=email, data={"role": account.role.value}
     )
 
     return {
@@ -49,12 +51,10 @@ def refresh(
     refresh_token = request.cookies.get("refresh_token_cookie")
 
     block_by_email = BlockedRefreshToken.get_by_email(
-        session=session,
-        email=refresh_payload.sub,
+        session=session, email=refresh_payload.sub
     )
     block_by_refresh_token = BlockedRefreshToken.get_by_refresh_token(
-        session=session,
-        refresh_token=refresh_token,
+        session=session, refresh_token=refresh_token
     )
 
     if block_by_email or block_by_refresh_token:

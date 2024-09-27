@@ -111,9 +111,14 @@ class BlockedRefreshTokensAdmin(ModelView, model=BlockedRefreshToken):
     icon = "fa-solid fa-skull-crossbones"
     category = "Users"
     # отображение списка
-    column_list = [BlockedRefreshToken.email]
+    column_list = [BlockedRefreshToken.email, BlockedRefreshToken.refresh_token]
     column_searchable_list = [BlockedRefreshToken.email]
-    column_default_sort = [(BlockedRefreshToken.id, True)]
+    column_formatters = {
+        BlockedRefreshToken.email: lambda m, a: m.email if m and m.email else "N/A",
+        BlockedRefreshToken.refresh_token: lambda m, a: (m.refresh_token[:10] + "...")
+        if m and m.refresh_token
+        else "N/A",
+    }
     # отображение объекта
     column_details_exclude_list = [
         BlockedRefreshToken.id,
